@@ -1,9 +1,12 @@
 package com.example.mycontact.domain;
 
+import com.example.mycontact.domain.dto.Birthday;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Entity
@@ -33,7 +36,9 @@ public class Person {
 
     private String address;
 
-    private LocalDate birthday;
+    @Valid
+    @Embedded
+    private Birthday birthday;
 
     private String job;
 
