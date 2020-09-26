@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Data // Getter Setter ToString RequiredArgsConstructor EqualsAndHashCode integrated 5
 public class Person {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
