@@ -32,6 +32,15 @@ class PersonServiceTest {
     }
 
     @Test
+    void getPeopleByName(){
+        givenPeople();
+
+        List<Person> result = personService.getPeopleByName("martin");
+
+        result.forEach(System.out::println);
+    }
+
+    @Test
     void cascadeTest(){
         givenPeople();
 
@@ -39,6 +48,7 @@ class PersonServiceTest {
         result.forEach(System.out::println);
 
         Person person = result.get(0);
+        person.setBlock(new Block("martin"));
         person.getBlock().setStartDate(LocalDate.now());
         person.getBlock().setEndDate(LocalDate.now());
 
