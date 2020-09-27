@@ -45,4 +45,9 @@ public class PersonService {
 //        return people.stream().filter(person -> person.getName().equals(name)).collect(Collectors.toList());
         return personRepository.findByName(name);
     }
+
+    @Transactional
+    public void put(Person person){
+        personRepository.save(person);
+    }
 }

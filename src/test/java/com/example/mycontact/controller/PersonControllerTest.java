@@ -3,6 +3,7 @@ package com.example.mycontact.controller;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,6 +28,20 @@ class PersonControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
+    }
+
+    @Test
+    void postPerson() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(personController).build();
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/person")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "    \"name\": \"martin\", \"age\": 20, \"bloodType\": \"A\"\n" +
+                                "}"))
+                .andDo(print())
+                .andExpect(status().isCreated());
     }
 
 }
