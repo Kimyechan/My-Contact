@@ -33,16 +33,23 @@ public class PersonController {
         log.info("person -> {}", personRepository.findAll());
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{id}") //많은 부분 수정
     public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto person){
         personService.modify(id, person);
 
         log.info("person -> {}", personRepository.findAll());
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("{id}") //일부 부분 수정
     public void modifyPerson(@PathVariable Long id, String name){
         personService.modify(id, name);
+
+        log.info("person -> {}", personRepository.findAll());
+    }
+
+    @DeleteMapping("{id}")
+    public void deletePerson(@PathVariable Long id){
+        personService.delete(id);
 
         log.info("person -> {}", personRepository.findAll());
     }

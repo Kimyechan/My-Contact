@@ -4,6 +4,8 @@ import com.example.mycontact.controller.dto.PersonDto;
 import com.example.mycontact.domain.dto.Birthday;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
@@ -22,6 +24,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 //@EqualsAndHashCode
 @Data // Getter Setter ToString RequiredArgsConstructor EqualsAndHashCode integrated 5
+@Where(clause = "deleted = false")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +60,9 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @ToString.Exclude
     private Block block;
+
+    @ColumnDefault("0")
+    private boolean deleted;
 
     public void set(PersonDto personDto){
         if(personDto.getAge() != 0){
