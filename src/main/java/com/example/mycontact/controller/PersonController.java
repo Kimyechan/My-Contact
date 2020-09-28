@@ -1,5 +1,6 @@
 package com.example.mycontact.controller;
 
+import com.example.mycontact.controller.dto.PersonDto;
 import com.example.mycontact.domain.Person;
 import com.example.mycontact.repository.PersonRepository;
 import com.example.mycontact.service.PersonService;
@@ -28,6 +29,20 @@ public class PersonController {
     @ResponseStatus(HttpStatus.CREATED)
     public void postPerson(@RequestBody Person person){
         personService.put(person);
+
+        log.info("person -> {}", personRepository.findAll());
+    }
+
+    @PutMapping("{id}")
+    public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto person){
+        personService.modify(id, person);
+
+        log.info("person -> {}", personRepository.findAll());
+    }
+
+    @PatchMapping("{id}")
+    public void modifyPerson(@PathVariable Long id, String name){
+        personService.modify(id, name);
 
         log.info("person -> {}", personRepository.findAll());
     }

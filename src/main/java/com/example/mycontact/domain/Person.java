@@ -1,8 +1,10 @@
 package com.example.mycontact.domain;
 
+import com.example.mycontact.controller.dto.PersonDto;
 import com.example.mycontact.domain.dto.Birthday;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -55,4 +57,30 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @ToString.Exclude
     private Block block;
+
+    public void set(PersonDto personDto){
+        if(personDto.getAge() != 0){
+            this.setAge(personDto.getAge());
+        }
+
+        if(!StringUtils.isEmpty(personDto.getHobby())){
+            this.setHobby(personDto.getHobby());
+        }
+
+        if(!StringUtils.isEmpty(personDto.getBloodType())){
+            this.setBloodType(personDto.getBloodType());
+        }
+
+        if(!StringUtils.isEmpty(personDto.getAddress())){
+            this.setAddress(personDto.getAddress());
+        }
+
+        if(!StringUtils.isEmpty(personDto.getJob())){
+            this.setJob(personDto.getJob());
+        }
+
+        if(!StringUtils.isEmpty(personDto.getPhoneNumber())){
+            this.setPhoneNumber(personDto.getPhoneNumber());
+        }
+    }
 }
