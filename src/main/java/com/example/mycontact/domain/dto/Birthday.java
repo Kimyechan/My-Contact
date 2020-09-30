@@ -13,20 +13,17 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class Birthday {
-
     private Integer yearOfBirthday;
-
-    @Min(1)
-    @Max(12)
     private Integer monthOfBirthday;
-
-    @Min(1)
-    @Max(31)
     private Integer dayOfBirthday;
 
-    public Birthday(LocalDate birthday){
+    private Birthday(LocalDate birthday){
         this.dayOfBirthday = birthday.getYear();
         this.monthOfBirthday = birthday.getMonthValue();
         this.yearOfBirthday = birthday.getYear();
+    }
+
+    public static Birthday of(LocalDate birthday){
+        return new Birthday(birthday);
     }
 }
