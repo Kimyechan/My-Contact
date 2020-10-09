@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping(value = "/api/person")
 @RestController
 @Slf4j
@@ -21,34 +23,34 @@ public class PersonController {
     private PersonRepository personRepository;
 
     @GetMapping("{id}")
-    public Person getPerson(@PathVariable Long id){
+    public Person getPerson(@PathVariable Long id) {
         return personService.getPerson(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void postPerson(@RequestBody Person person){
+    public void postPerson(@RequestBody Person person) {
         personService.put(person);
 
         log.info("person -> {}", personRepository.findAll());
     }
 
     @PutMapping("{id}") //많은 부분 수정
-    public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto person){
+    public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto person) {
         personService.modify(id, person);
 
         log.info("person -> {}", personRepository.findAll());
     }
 
     @PatchMapping("{id}") //일부 부분 수정
-    public void modifyPerson(@PathVariable Long id, String name){
+    public void modifyPerson(@PathVariable Long id, String name) {
         personService.modify(id, name);
 
         log.info("person -> {}", personRepository.findAll());
     }
 
     @DeleteMapping("{id}")
-    public void deletePerson(@PathVariable Long id){
+    public void deletePerson(@PathVariable Long id) {
         personService.delete(id);
 
         log.info("person -> {}", personRepository.findAll());
