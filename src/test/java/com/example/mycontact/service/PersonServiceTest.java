@@ -4,9 +4,8 @@ import com.example.mycontact.controller.dto.PersonDto;
 import com.example.mycontact.domain.Person;
 import com.example.mycontact.domain.dto.Birthday;
 import com.example.mycontact.exception.PersonNotFoundException;
-import com.example.mycontact.exception.RenameNotPermittedException;
+import com.example.mycontact.exception.RenameIsNotPermittedException;
 import com.example.mycontact.repository.PersonRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,8 +13,6 @@ import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -84,7 +81,7 @@ class PersonServiceTest {
         when(personRepository.findById(1L))
                 .thenReturn(Optional.of(new Person("tony")));
 
-        assertThrows(RenameNotPermittedException.class, () -> personService.modify(1L, mockPersonDto()));
+        assertThrows(RenameIsNotPermittedException.class, () -> personService.modify(1L, mockPersonDto()));
     }
 
     @Test

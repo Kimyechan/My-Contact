@@ -2,14 +2,16 @@ package com.example.mycontact.controller;
 
 import com.example.mycontact.controller.dto.PersonDto;
 import com.example.mycontact.domain.Person;
+import com.example.mycontact.exception.PersonNotFoundException;
+import com.example.mycontact.exception.RenameIsNotPermittedException;
+import com.example.mycontact.exception.dto.ErrorResponse;
 import com.example.mycontact.repository.PersonRepository;
 import com.example.mycontact.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequestMapping(value = "/api/person")
 @RestController
@@ -54,5 +56,21 @@ public class PersonController {
         personService.delete(id);
 
         log.info("person -> {}", personRepository.findAll());
+    }
+
+    @ExceptionHandler(value = RenameIsNotPermittedException.class)
+    public ResponseEntity<ErrorResponse> handleRenameNoPermittedException(RenameIsNotPermittedException ex) {
+        return new ResponseEntity<>(ErrorResponse.of(HttpStatus.BAD_REQUEST, ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = PersonNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePersonNotFoundException(PersonNotFoundException ex) {
+        return new ResponseEntity<>(ErrorResponse.of(HttpStatus.BAD_REQUEST, ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
+        log.error("서버 오류 : {}", ex.getMessage(), ex);
+        return new ResponseEntity<>(ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 서버 오류가 발생하였습니다"), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
