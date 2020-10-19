@@ -11,7 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
 
 @RequestMapping(value = "/api/person")
 @RestController
@@ -31,7 +35,7 @@ public class PersonController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void postPerson(@RequestBody PersonDto personDto) {
+    public void postPerson(@RequestBody @Valid PersonDto personDto) {
         personService.put(personDto);
 
         log.info("person -> {}", personRepository.findAll());
